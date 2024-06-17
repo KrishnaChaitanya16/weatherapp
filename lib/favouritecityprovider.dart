@@ -9,4 +9,8 @@ class FavoriteCitiesProvider with ChangeNotifier {
     _favoriteCities.add('$city, $country');
     notifyListeners();
   }
+  void removeCity(String cityCountry) {
+    _favoriteCities.remove(cityCountry);
+    notifyListeners();
+  }
 }

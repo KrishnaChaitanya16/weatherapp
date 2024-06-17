@@ -3,8 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:weatherapp1/favouritecityprovider.dart';
 import 'package:weatherapp1/pages/weatherpage.dart';
 
-import 'package:weatherapp1/pages/weatherpage.dart';
-
 class AddCities extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -17,7 +15,7 @@ class AddCities extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 220,),
+              SizedBox(height: 220),
               Text(
                 "Add Cities",
                 style: TextStyle(color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold),
@@ -76,7 +74,7 @@ class _AddCityFormState extends State<AddCityForm> {
             iconDisabledColor: Colors.white, // White disabled dropdown icon
             iconSize: 24.0, // Adjust icon size as desired
             onChanged: (value) {
-              setState(() { // Assuming you're using a StatefulWidget
+              setState(() {
                 selectedCountry = value!;
               });
             },
@@ -101,7 +99,6 @@ class _AddCityFormState extends State<AddCityForm> {
               ),
             ),
           ),
-
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
@@ -131,23 +128,39 @@ class FavoriteCitiesList extends StatelessWidget {
         String cityCountry = favoriteCitiesProvider.favoriteCities[index];
         String city = cityCountry.split(',')[0].trim();
         String country = cityCountry.split(',')[1].trim();
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(34, 35, 79, 1),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: ListTile(
-              title: Text(cityCountry, style: TextStyle(color: Colors.white)),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WeatherPage(cityName: city, countryName: country),
-                  ),
-                );
-              },
+        return Dismissible(
+          key: Key(cityCountry),
+          direction: DismissDirection.endToStart,
+          onDismissed: (direction) {
+            favoriteCitiesProvider.removeCity(cityCountry);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('$cityCountry removed')),
+            );
+          },
+          background: Container(
+            color: Colors.red,
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Icon(Icons.delete, color: Colors.white),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(34, 35, 79, 1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListTile(
+                title: Text(cityCountry, style: TextStyle(color: Colors.white)),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WeatherPage(cityName: city, countryName: country),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         );
