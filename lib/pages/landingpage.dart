@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:weatherapp1/pages/details.dart';
 
-class Landingpage extends StatefulWidget {
-  const Landingpage({super.key});
 
-  @override
-  State<Landingpage> createState() => _LandingpageState();
-}
-
-class _LandingpageState extends State<Landingpage> {
+class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,24 +18,15 @@ class _LandingpageState extends State<Landingpage> {
             Text("Get to know Weather", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300),),
             Text('Of Your Location', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300,),),
             SizedBox(height: 70,),
-            SizedBox(
-              width: 200, // Increase the width of the button
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DetailsPage()), // Navigate to YourDetailsPage
-                  );
-                },
-                child: Text(
-                  "Get Started",
-                  style: TextStyle(color: Colors.white),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue, // Change the button color to blue
-                ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPage()));
+              },
+              child: Text("Get Started", style: TextStyle(color: Colors.white),),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue, // Button color
               ),
-            ),
+            )
           ],
         ),
       ),
