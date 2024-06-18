@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weatherapp1/favouritecityprovider.dart';
-import 'package:weatherapp1/pages/weatherpage.dart';
+
+import 'weatherpage.dart';
 
 class AddCities extends StatelessWidget {
   @override
@@ -15,7 +16,7 @@ class AddCities extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 220),
+              SizedBox(height: 220,),
               Text(
                 "Add Cities",
                 style: TextStyle(color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold),
@@ -44,7 +45,7 @@ class _AddCityFormState extends State<AddCityForm> {
   String selectedCountry = 'India'; // Default country selection
 
   // List of countries for dropdown
-  List<String> countries = ['India', 'USA', 'UK', 'Canada', 'Australia'];
+  List<String> countries = ['India', 'USA', 'UK', 'Canada', 'Australia','Japan','China'];
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +75,7 @@ class _AddCityFormState extends State<AddCityForm> {
             iconDisabledColor: Colors.white, // White disabled dropdown icon
             iconSize: 24.0, // Adjust icon size as desired
             onChanged: (value) {
-              setState(() {
+              setState(() { // Assuming you're using a StatefulWidget
                 selectedCountry = value!;
               });
             },
@@ -133,14 +134,12 @@ class FavoriteCitiesList extends StatelessWidget {
           direction: DismissDirection.endToStart,
           onDismissed: (direction) {
             favoriteCitiesProvider.removeCity(cityCountry);
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('$cityCountry removed')),
-            );
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$cityCountry  is removed from Favourites")));
           },
           background: Container(
             color: Colors.red,
             alignment: Alignment.centerRight,
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: Icon(Icons.delete, color: Colors.white),
           ),
           child: Padding(

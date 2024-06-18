@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:weatherapp1/Userdetailsprovider.dart';
 import 'package:weatherapp1/favouritecityprovider.dart';
 import 'package:weatherapp1/pages/AddCities.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
     ChangeNotifierProvider<WeatherProvider>(
     create: (context) => WeatherProvider(),
     ),
+
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

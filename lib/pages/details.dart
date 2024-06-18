@@ -91,7 +91,7 @@ class DetailsPage extends StatelessWidget {
                   selectedCountry = value!;
                   userDetailsProvider.country = value;
                 },
-                items: ['India', 'USA', 'UK', 'Canada', 'Australia']
+                items: ['India', 'USA', 'UK', 'Canada', 'Australia','Japan','China']
                     .map<DropdownMenuItem<String>>((String country) {
                   return DropdownMenuItem<String>(
                     value: country,
