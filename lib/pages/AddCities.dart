@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weatherapp1/favouritecityprovider.dart';
 import 'package:weatherapp1/pages/LandingPage.dart';
 import 'weatherpage.dart';
@@ -22,9 +23,15 @@ class AddCities extends StatelessWidget {
                 children: [
                   IconButton(
                     icon: Icon(Icons.logout, color: Colors.white),
-                    onPressed: () {
+                    onPressed: () async {
                       final favoriteCitiesProvider = Provider.of<FavoriteCitiesProvider>(context, listen: false);
                       favoriteCitiesProvider.clearCities(); // Clear favorite cities
+
+                      // Set isLoggedIn to false
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      await prefs.setBool('isLoggedIn', false);
+
+                      // Navigate to the landing page
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => LandingPage()),
