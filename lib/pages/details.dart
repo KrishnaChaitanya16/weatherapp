@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weatherapp1/Userdetailsprovider.dart';
 import 'package:weatherapp1/pages/AddCities.dart';
 
@@ -117,7 +118,7 @@ class DetailsPage extends StatelessWidget {
 
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 // Perform validation
                 if (nameController.text.isNotEmpty &&
                     emailController.text.isNotEmpty &&
@@ -128,8 +129,12 @@ class DetailsPage extends StatelessWidget {
                   userDetailsProvider.city = cityController.text;
                   userDetailsProvider.country = selectedCountry;
 
+                  // Save isLoggedIn as true in shared preferences
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  await prefs.setBool('isLoggedIn', true);
+
                   // Navigate to AddCities page
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddCities()));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AddCities()));
                 } else {
                   showDialog(
                     context: context,

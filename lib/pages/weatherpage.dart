@@ -28,6 +28,8 @@ class WeatherPage extends StatelessWidget {
         return 'assets/haze.png';
       case 'drizzle':
         return 'assets/raining.jpg';
+      case 'mist':
+        return timeOfDay=='day'?'assets/Mist.png':'assets/nightmist.png';
       default:
         return 'assets/default.png'; // A default image for unspecified conditions
     }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weatherapp1/favouritecityprovider.dart';
-
+import 'package:weatherapp1/pages/LandingPage.dart';
 import 'weatherpage.dart';
 
 class AddCities extends StatelessWidget {
@@ -16,6 +16,24 @@ class AddCities extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.logout, color: Colors.white),
+                    onPressed: () {
+                      final favoriteCitiesProvider = Provider.of<FavoriteCitiesProvider>(context, listen: false);
+                      favoriteCitiesProvider.clearCities(); // Clear favorite cities
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => LandingPage()),
+                            (route) => false, // Remove all routes except landing page
+                      );
+                    },
+                  ),
+                ],
+              ),
               SizedBox(height: 220,),
               Text(
                 "Add Cities",
@@ -45,7 +63,7 @@ class _AddCityFormState extends State<AddCityForm> {
   String selectedCountry = 'India'; // Default country selection
 
   // List of countries for dropdown
-  List<String> countries = ['India', 'USA', 'UK', 'Canada', 'Australia','Japan','China'];
+  List<String> countries = ['India', 'USA', 'UK', 'Canada', 'Australia', 'Japan', 'China'];
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +152,7 @@ class FavoriteCitiesList extends StatelessWidget {
           direction: DismissDirection.endToStart,
           onDismissed: (direction) {
             favoriteCitiesProvider.removeCity(cityCountry);
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$cityCountry  is removed from Favourites")));
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$cityCountry is removed from Favourites")));
           },
           background: Container(
             color: Colors.red,
