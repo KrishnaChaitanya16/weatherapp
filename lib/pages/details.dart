@@ -4,34 +4,55 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weatherapp1/Userdetailsprovider.dart';
 import 'package:weatherapp1/pages/AddCities.dart';
 
-class DetailsPage extends StatelessWidget {
+class DetailsPage extends StatefulWidget {
+  const DetailsPage({super.key});
+
+  @override
+  _DetailsPageState createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<DetailsPage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
-  String selectedCountry = 'India'; // Default country selection
+  late final String selectedCountry; // Declare as late final
+
+  @override
+  void initState() {
+    super.initState();
+    selectedCountry = 'India'; // Initialize selectedCountry
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    cityController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final userDetailsProvider = Provider.of<UserDetailsProvider>(context);
 
     return Scaffold(
-      backgroundColor: Color.fromRGBO(8, 12, 51, 1),
+      backgroundColor: const Color.fromRGBO(8, 12, 51, 1),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               "Enter Your Details",
               style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 33),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextFormField(
               controller: nameController,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
               onChanged: (value) => userDetailsProvider.name = value,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Name',
                 labelStyle: TextStyle(color: Colors.white),
                 enabledBorder: OutlineInputBorder(
@@ -42,12 +63,12 @@ class DetailsPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: emailController,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
               onChanged: (value) => userDetailsProvider.email = value,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Email ID',
                 labelStyle: TextStyle(color: Colors.white),
                 enabledBorder: OutlineInputBorder(
@@ -58,12 +79,12 @@ class DetailsPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: cityController,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
               onChanged: (value) => userDetailsProvider.city = value,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'City',
                 labelStyle: TextStyle(color: Colors.white),
                 enabledBorder: OutlineInputBorder(
@@ -74,76 +95,72 @@ class DetailsPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
-              width: double.infinity, // Make the container take up full width
-
+              width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: Color.fromRGBO(8, 12, 51, 1), // Match background color
+                color: const Color.fromRGBO(8, 12, 51, 1),
               ),
               child: DropdownButtonFormField<String>(
-                value: selectedCountry, // Pre-selected value
-                dropdownColor: Color.fromRGBO(8, 12, 51, 1), // Match background color
-                iconEnabledColor: Colors.white, // White dropdown icon
-                iconDisabledColor: Colors.white, // White disabled dropdown icon
-                iconSize: 24.0, // Adjust icon size as desired
+                value: selectedCountry,
+                dropdownColor: const Color.fromRGBO(8, 12, 51, 1),
+                iconEnabledColor: Colors.white,
+                iconDisabledColor: Colors.white,
+                iconSize: 24.0,
                 onChanged: (value) {
-                  selectedCountry = value!;
-                  userDetailsProvider.country = value;
+                  setState(() {
+                    selectedCountry = value!;
+                    userDetailsProvider.country = value;
+                  });
                 },
-                items: ['India', 'USA', 'UK', 'Canada', 'Australia','Japan','China']
+                items: ['India', 'USA', 'UK', 'Canada', 'Australia', 'Japan', 'China']
                     .map<DropdownMenuItem<String>>((String country) {
                   return DropdownMenuItem<String>(
                     value: country,
                     child: Text(
                       country,
-                      style: TextStyle(color: Colors.white), // White text
+                      style: const TextStyle(color: Colors.white),
                     ),
                   );
                 }).toList(),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   contentPadding: EdgeInsets.symmetric(horizontal: 10),
                   labelText: 'Country',
-                  labelStyle: TextStyle(color: Colors.white), // White label
+                  labelStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white), // White border
+                    borderSide: BorderSide(color: Colors.white),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white), // White border
+                    borderSide: BorderSide(color: Colors.white),
                   ),
                 ),
               ),
             ),
-
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                // Perform validation
                 if (nameController.text.isNotEmpty &&
                     emailController.text.isNotEmpty &&
                     cityController.text.isNotEmpty) {
-                  // Save details to provider
                   userDetailsProvider.name = nameController.text;
                   userDetailsProvider.email = emailController.text;
                   userDetailsProvider.city = cityController.text;
                   userDetailsProvider.country = selectedCountry;
 
-                  // Save isLoggedIn as true in shared preferences
                   SharedPreferences prefs = await SharedPreferences.getInstance();
                   await prefs.setBool('isLoggedIn', true);
 
-                  // Navigate to AddCities page
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AddCities()));
                 } else {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: Text('Validation Error'),
-                      content: Text('Please fill in all fields.'),
+                      title: const Text('Validation Error'),
+                      content: const Text('Please fill in all fields.'),
                       actions: <Widget>[
                         TextButton(
-                          child: Text('OK'),
+                          child: const Text('OK'),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
@@ -153,10 +170,10 @@ class DetailsPage extends StatelessWidget {
                   );
                 }
               },
-              child: Text('Submit', style: TextStyle(color: Colors.white)),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // Button color
+                backgroundColor: Colors.blue,
               ),
+              child: const Text('Submit', style: TextStyle(color: Colors.white)),
             ),
           ],
         ),

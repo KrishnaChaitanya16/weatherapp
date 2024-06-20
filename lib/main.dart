@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,7 +24,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final bool isLoggedIn;
 
-  MyApp({required this.isLoggedIn});
+  const MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
 class SplashScreen extends StatefulWidget {
   final bool isLoggedIn;
 
-  SplashScreen({required this.isLoggedIn});
+  const SplashScreen({super.key, required this.isLoggedIn});
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -64,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 2000), // Adjust duration as needed
+      duration: const Duration(milliseconds: 2000), // Adjust duration as needed
     );
     _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
     _controller.forward();
@@ -72,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   }
 
   void _navigateToNextScreen() {
-    Timer(Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => widget.isLoggedIn ? AddCities() : LandingPage(),
@@ -90,20 +90,20 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(9, 13, 51, 1), // Customize the background color of your splash screen
+      backgroundColor: const Color.fromRGBO(9, 13, 51, 1), // Customize the background color of your splash screen
       body: Center(
         child: Column(
           children: [
-            SizedBox(height: 200,),
+            const SizedBox(height: 200,),
             Center(
               child: FadeTransition(
                 opacity: _animation,
                 child: SizedBox(height:270,child: Image.asset('assets/opening.png',fit: BoxFit.cover,)), // Replace with your logo or desired widget
               ),
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             FadeTransition(opacity: _animation,
-            child: Text('Daily Weather App',style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),))
+            child: const Text('Daily Weather App',style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),))
           ],
         ),
       ),

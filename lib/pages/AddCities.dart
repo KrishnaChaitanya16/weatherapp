@@ -6,10 +6,12 @@ import 'package:weatherapp1/pages/LandingPage.dart';
 import 'weatherpage.dart';
 
 class AddCities extends StatelessWidget {
+  const AddCities({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(8, 12, 51, 1),
+      backgroundColor: const Color.fromRGBO(8, 12, 51, 1),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -17,12 +19,12 @@ class AddCities extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.logout, color: Colors.white),
+                    icon: const Icon(Icons.logout, color: Colors.white),
                     onPressed: () async {
                       final favoriteCitiesProvider = Provider.of<FavoriteCitiesProvider>(context, listen: false);
                       favoriteCitiesProvider.clearCities(); // Clear favorite cities
@@ -41,15 +43,15 @@ class AddCities extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 220,),
-              Text(
+              const SizedBox(height: 220,),
+              const Text(
                 "Add Cities",
                 style: TextStyle(color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 20),
-              AddCityForm(),
-              SizedBox(height: 20),
-              Expanded(
+              const SizedBox(height: 20),
+              const AddCityForm(),
+              const SizedBox(height: 20),
+              const Expanded(
                 child: FavoriteCitiesList(),
               ),
             ],
@@ -61,6 +63,8 @@ class AddCities extends StatelessWidget {
 }
 
 class AddCityForm extends StatefulWidget {
+  const AddCityForm({super.key});
+
   @override
   _AddCityFormState createState() => _AddCityFormState();
 }
@@ -80,8 +84,8 @@ class _AddCityFormState extends State<AddCityForm> {
         children: [
           TextFormField(
             controller: cityController,
-            style: TextStyle(color: Colors.white),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.white),
+            decoration: const InputDecoration(
               labelText: 'City',
               labelStyle: TextStyle(color: Colors.white),
               enabledBorder: OutlineInputBorder(
@@ -92,10 +96,10 @@ class _AddCityFormState extends State<AddCityForm> {
               ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           DropdownButtonFormField<String>(
             value: selectedCountry, // Pre-selected value
-            dropdownColor: Color.fromRGBO(8, 12, 51, 1), // Match background color
+            dropdownColor: const Color.fromRGBO(8, 12, 51, 1), // Match background color
             iconEnabledColor: Colors.white, // White dropdown icon
             iconDisabledColor: Colors.white, // White disabled dropdown icon
             iconSize: 24.0, // Adjust icon size as desired
@@ -109,11 +113,11 @@ class _AddCityFormState extends State<AddCityForm> {
                 value: country,
                 child: Text(
                   country,
-                  style: TextStyle(color: Colors.white), // White text
+                  style: const TextStyle(color: Colors.white), // White text
                 ),
               );
             }).toList(),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               contentPadding: EdgeInsets.symmetric(horizontal: 10),
               labelText: 'Country',
               labelStyle: TextStyle(color: Colors.white), // White label
@@ -125,17 +129,17 @@ class _AddCityFormState extends State<AddCityForm> {
               ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               final favoriteCitiesProvider = Provider.of<FavoriteCitiesProvider>(context, listen: false);
               favoriteCitiesProvider.addCity(cityController.text.trim(), selectedCountry);
               cityController.clear(); // Clear input after adding city
             },
-            child: Text('Add City', style: TextStyle(color: Colors.white)),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue, // Button color
             ),
+            child: const Text('Add City', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -144,6 +148,8 @@ class _AddCityFormState extends State<AddCityForm> {
 }
 
 class FavoriteCitiesList extends StatelessWidget {
+  const FavoriteCitiesList({super.key});
+
   @override
   Widget build(BuildContext context) {
     final favoriteCitiesProvider = Provider.of<FavoriteCitiesProvider>(context);
@@ -164,18 +170,18 @@ class FavoriteCitiesList extends StatelessWidget {
           background: Container(
             color: Colors.red,
             alignment: Alignment.centerRight,
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Icon(Icons.delete, color: Colors.white),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: const Icon(Icons.delete, color: Colors.white),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Container(
               decoration: BoxDecoration(
-                color: Color.fromRGBO(34, 35, 79, 1),
+                color: const Color.fromRGBO(34, 35, 79, 1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: ListTile(
-                title: Text(cityCountry, style: TextStyle(color: Colors.white)),
+                title: Text(cityCountry, style: const TextStyle(color: Colors.white)),
                 onTap: () {
                   Navigator.push(
                     context,
